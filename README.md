@@ -64,3 +64,7 @@ chmod +x dockerless_run.sh
 
 ./dockerless_run.sh 10m
 ```
+
+### Credits
+
+Uses fuzzing code/logic from https://github.com/guidovranken/dcrd-fuzzers 
