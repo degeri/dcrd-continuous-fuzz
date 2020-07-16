@@ -30,7 +30,7 @@ dcrd-continuous fuzzing
 
     ```go get -u github.com/dvyukov/go-fuzz/go-fuzz github.com/dvyukov/go-fuzz/go-fuzz-build```
 
- - **Docker**
+ - **Docker** (Needed for default docker version)
 
     Install: https://docs.docker.com/engine/install/. 
         
@@ -55,3 +55,12 @@ On first run the script will use docker to generate the go-fuzz bins and place t
 Once one full loop of fuzzing is done the script will check dcrd master for any changes and will update the bins if needed. It also outputs alerts for any crashes found.
 
 corpus and crashes can be found in the relative folder inside output/
+
+## There is also a dockerless version
+
+```
+chmod +x dockerless_build.sh
+chmod +x dockerless_run.sh
+
+./dockerless_run.sh 10m
+```
