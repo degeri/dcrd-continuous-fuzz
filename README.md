@@ -40,6 +40,8 @@ dcrd-continuous fuzzing
 
 # To run 
 
+
+
 ```
 chmod +x run.sh
 
@@ -48,6 +50,8 @@ chmod +x run.sh
 
 The above command runs each fuzzer (currently eleven) for 10 minutes. It is recommended to not make this value too low.
 
-Once one full loop of fuzzing is done the program will check dcrd master for any changes and will update the bins if needed.
+On first run the script will use docker to generate the go-fuzz bins and place them in the fuzzbins folder. 
 
-It also outputs alerts for any crashes found.
+Once one full loop of fuzzing is done the script will check dcrd master for any changes and will update the bins if needed. It also outputs alerts for any crashes found.
+
+corpus and crashes can be found in the relative folder inside output/
