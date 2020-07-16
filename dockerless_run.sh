@@ -12,6 +12,9 @@ make_bins() {
 
 check_master() {
     sha_web=$(curl -s 'https://api.github.com/repos/decred/dcrd/commits/master' | jq -r '.sha')
+    if [ "$sha_web" == "" ]; then
+        return 0
+    fi
     echo "Checking master"
     if [ -f shafile ]; then
         sha_stored=`cat shafile`
