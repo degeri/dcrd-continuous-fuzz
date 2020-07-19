@@ -1,4 +1,4 @@
-package edwards
+package fuzz_edwards
 
 import (
 	"bytes"

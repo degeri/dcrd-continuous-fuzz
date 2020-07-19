@@ -1,4 +1,4 @@
-package address
+package fuzz_address
 
 import (
 	dcrd_chaincfg "github.com/decred/dcrd/chaincfg/v3"

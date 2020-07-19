@@ -1,4 +1,4 @@
-package chainhash
+package fuzz_chainhash
 
 import (
 	dcrd_chainhash "github.com/decred/dcrd/chaincfg/chainhash"

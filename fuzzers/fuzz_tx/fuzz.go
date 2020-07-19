@@ -1,4 +1,4 @@
-package tx
+package fuzz_tx
 
 import (
 	dcrd_util "github.com/decred/dcrd/dcrutil/v3"

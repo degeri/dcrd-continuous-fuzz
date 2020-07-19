@@ -1,4 +1,4 @@
-package wire
+package fuzz_wire
 
 import (
 	"bytes"

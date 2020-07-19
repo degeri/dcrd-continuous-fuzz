@@ -1,4 +1,4 @@
-package txscript
+package fuzz_txscript
 
 import (
 	dcrd_chainhash "github.com/decred/dcrd/chaincfg/chainhash"
