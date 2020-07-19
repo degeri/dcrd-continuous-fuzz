@@ -1,4 +1,4 @@
-package secp256k1
+package fuzz_secp256k1
 
 import (
 	"bytes"

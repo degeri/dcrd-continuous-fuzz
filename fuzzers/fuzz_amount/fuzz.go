@@ -1,4 +1,4 @@
-package amount
+package fuzz_amount
 
 import (
 	"bytes"

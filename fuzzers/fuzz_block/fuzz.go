@@ -1,4 +1,4 @@
-package block
+package fuzz_block
 
 import (
 	"bytes"

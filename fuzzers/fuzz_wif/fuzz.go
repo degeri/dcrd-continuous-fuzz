@@ -1,4 +1,4 @@
-package wif
+package fuzz_wif
 
 import (
 	dcrd_chaincfg "github.com/decred/dcrd/chaincfg/v3"

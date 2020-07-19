@@ -59,7 +59,7 @@ corpus and crashes can be found in the relative folder inside output/
 ## There is also a dockerless version
 
 ```
-chmod +x dockerless_build.sh
+chmod +x build.sh
 chmod +x dockerless_run.sh
 
 ./dockerless_run.sh 10m

@@ -1,4 +1,4 @@
-package base58
+package fuzz_base58
 
 import (
 	dcrd_base58 "github.com/decred/base58"

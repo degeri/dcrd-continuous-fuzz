@@ -9,14 +9,14 @@ make_bins() {
     mkdir -p output
     docker build . -t decred/dcrdfuzzbuilder
     id=$(docker create decred/dcrdfuzzbuilder)
-    docker cp $id:/root/fuzzers/ fuzzbins/
+    docker cp $id:/root/src/fuzzdcrd/ fuzzbins/
     docker rm -v $id
     docker rmi -f decred/dcrdfuzzbuilder
 }
 
 check_master() {
     sha_web=$(curl -s 'https://api.github.com/repos/decred/dcrd/commits/master' | jq -r '.sha')
-    if [ "$sha_web" == "" ]; then
+    if [ "$sha_web" == "null" ]; then
         return 0
     fi
     echo "Checking master"

@@ -7,12 +7,17 @@ make_bins() {
         rm -rf fuzzbins/ 
     fi
     mkdir -p output
-    ./dockerless_build.sh
+    ./build.sh
+    cp -r $HOME/src/fuzzdcrd/ fuzzbins/
+    if [ -d $HOME/src/fuzzdcrd/ ] 
+    then
+        rm -rf $HOME/src/fuzzdcrd/ 
+    fi
 }
 
 check_master() {
     sha_web=$(curl -s 'https://api.github.com/repos/decred/dcrd/commits/master' | jq -r '.sha')
-    if [ "$sha_web" == "" ]; then
+    if [ "$sha_web" == "null" ]; then
         return 0
     fi
     echo "Checking master"
