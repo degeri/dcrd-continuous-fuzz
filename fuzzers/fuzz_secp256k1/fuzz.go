@@ -34,7 +34,7 @@ func Fuzz(input []byte) int {
 			pub.SerializeCompressed()
 			serializedKey := priv.Serialize()
 			if !bytes.Equal(serializedKey, input) {
-				panic("dcrd_secp256k1.Secp256k1: key not equal")
+				return 0
 			}
 		}
 	}
