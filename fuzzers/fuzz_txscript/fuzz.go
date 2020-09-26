@@ -57,7 +57,7 @@ func dcrd_VmStep(input []byte) {
 
 func dcrd_ExtractPKScriptAddrs(input []byte) {
 	const scriptVersion = 0
-	dcrd_txscript.ExtractPkScriptAddrs(scriptVersion, input, dcrd_chaincfg.MainNetParams())
+	dcrd_txscript.ExtractPkScriptAddrs(scriptVersion, input, dcrd_chaincfg.MainNetParams(), true)
 }
 
 func Fuzz(input []byte) int {
@@ -71,15 +71,15 @@ func Fuzz(input []byte) int {
 	}
 	dcrd_txscript.IsMultisigSigScript(input)
 	const scriptVersion = 0
-	dcrd_txscript.GetScriptClass(scriptVersion, input)
+	dcrd_txscript.GetScriptClass(scriptVersion, input, true)
 	dcrd_DisasmString(input)
 	dcrd_VmStep(input)
 	/* Crashed (30-08-2018), confirmed fixed 05-09-2019 */ dcrd_ExtractPKScriptAddrs(input)
 	dcrd_txscript.PushedData(input)
 	dcrd_txscript.ExtractPkScriptAltSigType(input)
 	dcrd_txscript.GenerateProvablyPruneableOut(input)
-	dcrd_txscript.GetStakeOutSubclass(input)
-	dcrd_txscript.ContainsStakeOpCodes(input)
+	dcrd_txscript.GetStakeOutSubclass(input, true)
+	dcrd_txscript.ContainsStakeOpCodes(input, true)
 	dcrd_txscript.PayToScriptHashScript(input)
 
 	{
