@@ -3,7 +3,7 @@ package fuzz_amount
 import (
 	"bytes"
 	"encoding/binary"
-	dcrd_util "github.com/decred/dcrd/dcrutil/v3"
+	dcrd_util "github.com/decred/dcrd/dcrutil/v4"
 )
 
 func Fuzz(input []byte) int {

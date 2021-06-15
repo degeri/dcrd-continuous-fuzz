@@ -1,8 +1,8 @@
 package fuzz_tx
 
 import (
-	dcrd_util "github.com/decred/dcrd/dcrutil/v3"
-	dcrd_txsort "github.com/decred/dcrd/dcrutil/v3/txsort"
+	dcrd_util "github.com/decred/dcrd/dcrutil/v4"
+	dcrd_txsort "github.com/decred/dcrd/dcrutil/v4/txsort"
 )
 
 func Fuzz(input []byte) int {

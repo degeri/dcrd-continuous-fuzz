@@ -2,28 +2,25 @@ package fuzz_address
 
 import (
 	dcrd_chaincfg "github.com/decred/dcrd/chaincfg/v3"
-	dcrd_ec "github.com/decred/dcrd/dcrec"
-	dcrd_util "github.com/decred/dcrd/dcrutil/v3"
+	dcrd_stdaddr "github.com/decred/dcrd/txscript/v4/stdaddr"
 )
 
 func Fuzz(input []byte) int {
 	{
-		addr, err := dcrd_util.DecodeAddress(string(input), dcrd_chaincfg.MainNetParams())
+		addr, err := dcrd_stdaddr.DecodeAddress(string(input), dcrd_chaincfg.MainNetParams())
 		if err == nil {
 			addr.String()
-			addr.Address()
-			addr.ScriptAddress()
+			addr.PaymentScript()
 		}
 	}
 
-	dcrd_util.NewAddressPubKey(input, dcrd_chaincfg.MainNetParams())
-	dcrd_util.NewAddressPubKeyHash(input, dcrd_chaincfg.MainNetParams(), dcrd_ec.STEcdsaSecp256k1)
-	dcrd_util.NewAddressPubKeyHash(input, dcrd_chaincfg.MainNetParams(), dcrd_ec.STEd25519)
-	dcrd_util.NewAddressPubKeyHash(input, dcrd_chaincfg.MainNetParams(), dcrd_ec.STSchnorrSecp256k1)
-	dcrd_util.NewAddressScriptHash(input, dcrd_chaincfg.MainNetParams())
-	dcrd_util.NewAddressScriptHashFromHash(input, dcrd_chaincfg.MainNetParams())
-	dcrd_util.NewAddressSecpPubKey(input, dcrd_chaincfg.MainNetParams())
-	dcrd_util.NewAddressEdwardsPubKey(input, dcrd_chaincfg.MainNetParams())
-	dcrd_util.NewAddressSecSchnorrPubKey(input, dcrd_chaincfg.MainNetParams())
+	dcrd_stdaddr.NewAddressPubKeyEcdsaSecp256k1Raw(0, input, dcrd_chaincfg.MainNetParams())
+	dcrd_stdaddr.NewAddressPubKeyEd25519Raw(0, input, dcrd_chaincfg.MainNetParams())
+	dcrd_stdaddr.NewAddressPubKeyHashEcdsaSecp256k1(0, input, dcrd_chaincfg.MainNetParams())
+	dcrd_stdaddr.NewAddressPubKeyHashEd25519(0, input, dcrd_chaincfg.MainNetParams())
+	dcrd_stdaddr.NewAddressPubKeyHashSchnorrSecp256k1(0, input, dcrd_chaincfg.MainNetParams())
+	dcrd_stdaddr.NewAddressPubKeySchnorrSecp256k1Raw(0, input, dcrd_chaincfg.MainNetParams())
+	dcrd_stdaddr.NewAddressScriptHash(0, input, dcrd_chaincfg.MainNetParams())
+	dcrd_stdaddr.NewAddressScriptHashFromHash(0, input, dcrd_chaincfg.MainNetParams())
 	return 0
 }

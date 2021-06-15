@@ -2,7 +2,7 @@ package fuzz_wif
 
 import (
 	dcrd_chaincfg "github.com/decred/dcrd/chaincfg/v3"
-	dcrd_util "github.com/decred/dcrd/dcrutil/v3"
+	dcrd_util "github.com/decred/dcrd/dcrutil/v4"
 )
 
 func Fuzz(input []byte) int {

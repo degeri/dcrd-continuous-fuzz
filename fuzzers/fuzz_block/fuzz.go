@@ -2,7 +2,7 @@ package fuzz_block
 
 import (
 	"bytes"
-	dcrd_util "github.com/decred/dcrd/dcrutil/v3"
+	dcrd_util "github.com/decred/dcrd/dcrutil/v4"
 )
 
 func Fuzz(input []byte) int {
