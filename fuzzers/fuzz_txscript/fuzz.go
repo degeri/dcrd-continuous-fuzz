@@ -3,9 +3,9 @@ package fuzz_txscript
 import (
 	dcrd_chainhash "github.com/decred/dcrd/chaincfg/chainhash"
 	dcrd_chaincfg "github.com/decred/dcrd/chaincfg/v3"
-	dcrd_util "github.com/decred/dcrd/dcrutil/v3"
-	dcrd_txscript "github.com/decred/dcrd/txscript/v3"
+	dcrd_txscript "github.com/decred/dcrd/txscript/v4"
 	dcrd_wire "github.com/decred/dcrd/wire"
+	dcrd_stdaddr "github.com/decred/dcrd/txscript/v4/stdaddr"
 )
 
 func dcrd_DisasmString(input []byte) {
@@ -75,12 +75,10 @@ func Fuzz(input []byte) int {
 	dcrd_DisasmString(input)
 	dcrd_VmStep(input)
 	/* Crashed (30-08-2018), confirmed fixed 05-09-2019 */ dcrd_ExtractPKScriptAddrs(input)
-	dcrd_txscript.PushedData(input)
 	dcrd_txscript.ExtractPkScriptAltSigType(input)
 	dcrd_txscript.GenerateProvablyPruneableOut(input)
 	dcrd_txscript.GetStakeOutSubclass(input, true)
 	dcrd_txscript.ContainsStakeOpCodes(input, true)
-	dcrd_txscript.PayToScriptHashScript(input)
 
 	{
 		builder := dcrd_txscript.NewScriptBuilder()
@@ -90,43 +88,7 @@ func Fuzz(input []byte) int {
 		builder.Script()
 	}
 	{
-		pos := 0
-		left := len(input)
-		var keys []*dcrd_util.AddressSecpPubKey
-		for {
-			if left < 1 {
-				break
-			}
-			keylen := 0
-			if input[pos]&1 == 0 {
-				keylen = 33
-			} else {
-				keylen = 65
-			}
-			pos += 1
-			left -= 1
-			if left < keylen {
-				break
-			}
-			key := input[pos : pos+keylen]
-			pos += keylen
-			left -= keylen
-			apk, err := dcrd_util.NewAddressSecpPubKey(key, dcrd_chaincfg.MainNetParams())
-			if err != nil {
-				break
-			}
-			keys = append(keys, apk)
-		}
-		script, err := dcrd_txscript.MultiSigScript(keys, len(keys))
-		if err == nil {
-			dcrd_txscript.MultisigRedeemScriptFromScriptSig(script)
-		}
-	}
-	{
-		addr, err := dcrd_util.DecodeAddress(string(input), dcrd_chaincfg.MainNetParams())
-		if err == nil {
-			dcrd_txscript.PayToAddrScript(addr)
-		}
+		dcrd_stdaddr.DecodeAddress(string(input), dcrd_chaincfg.MainNetParams())
 	}
 	return 0
 }

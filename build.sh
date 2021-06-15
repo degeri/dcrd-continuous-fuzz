@@ -8,14 +8,16 @@ if [ -d $HOME/src/fuzzdcrd/ ]
 
 git clone https://github.com/decred/dcrd $HOME/src/fuzzdcrd
 
-go get -u github.com/dvyukov/go-fuzz/go-fuzz github.com/dvyukov/go-fuzz/go-fuzz-build
+go get -u github.com/dvyukov/go-fuzz/go-fuzz@latest github.com/dvyukov/go-fuzz/go-fuzz-build@latest
 
 echo "Dcrd cloned. Copying over fuzzers and compiling"
 
 cp -r fuzzers/fuzz_* $HOME/src/fuzzdcrd/
 
+(cd $HOME/src/fuzzdcrd/ && go get github.com/dvyukov/go-fuzz/go-fuzz-dep && go get github.com/decred/dcrd/dcrec/edwards/v2@v2.0.1)
+
 for folder in $HOME/src/fuzzdcrd/fuzz_*/
-do 
+do  
     (cd "$folder" && go-fuzz-build)
 done
 

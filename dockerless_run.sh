@@ -9,10 +9,10 @@ make_bins() {
     mkdir -p output
     ./build.sh
     cp -r $HOME/src/fuzzdcrd/ fuzzbins/
-    if [ -d $HOME/src/fuzzdcrd/ ] 
-    then
-        rm -rf $HOME/src/fuzzdcrd/ 
-    fi
+    #if [ -d $HOME/src/fuzzdcrd/ ] 
+    #then
+    #    rm -rf $HOME/src/fuzzdcrd/ 
+    #fi
 }
 
 check_master() {

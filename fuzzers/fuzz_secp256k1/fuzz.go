@@ -2,8 +2,8 @@ package fuzz_secp256k1
 
 import (
 	"bytes"
-	dcrd_secp256k1 "github.com/decred/dcrd/dcrec/secp256k1/v3"
-	dcrd_ecdsa "github.com/decred/dcrd/dcrec/secp256k1/v3/ecdsa"
+	dcrd_secp256k1 "github.com/decred/dcrd/dcrec/secp256k1/v4"
+	dcrd_ecdsa "github.com/decred/dcrd/dcrec/secp256k1/v4/ecdsa"
 )
 
 func Fuzz(input []byte) int {
