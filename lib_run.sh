@@ -2,16 +2,21 @@
 cd "$(dirname "$0")"
 
 make_bins() {
-    if [ -d fuzzbins/ ] 
+    if [ -d lib_fuzzbins/ ] 
     then
-        rm -rf fuzzbins/ 
+        rm -rf lib_fuzzbins/ 
     fi
     mkdir -p output
-    docker build . -t decred/dcrdfuzzbuilder
-    id=$(docker create decred/dcrdfuzzbuilder)
-    docker cp $id:/root/src/fuzzdcrd/ fuzzbins/
+    docker build --file lib_Dockerfile . -t decred/lib_dcrdfuzzbuilder
+    id=$(docker create decred/lib_dcrdfuzzbuilder)
+    docker cp $id:/root/src/fuzzdcrd/ lib_fuzzbins/
     docker rm -v $id
-    docker rmi -f decred/dcrdfuzzbuilder
+    docker rmi -f decred/lib_dcrdfuzzbuilder
+    for folder in lib_fuzzbins/*/
+        do
+            mkdir -p lib_output/$(basename $folder)
+            mkdir -p lib_output/crash_$(basename $folder)
+        done
 }
 
 check_master() {
@@ -20,25 +25,25 @@ check_master() {
         return 0
     fi
     echo "Checking master"
-    if [ -f shafile ]; then
-        sha_stored=`cat shafile`
+    if [ -f lib_shafile ]; then
+        sha_stored=`cat lib_shafile`
         if [ "$sha_web" == "$sha_stored" ]; then
             return 0
         else
             echo "Found new master hash updating"
             make_bins
-            echo $sha_web > shafile
+            echo $sha_web > lib_shafile
         fi
     else
-        echo $sha_web > shafile
+        echo $sha_web > lib_shafile
     fi
 }
 
 check_crashes() {
     echo "Checking crashes"
-    for folder in output/*/
+    for folder in lib_output/crash_*/
         do
-        print_string=$(($(ls "$folder/crashers" | wc -l) / 3 ))
+        print_string=$(($(ls "$folder/" | wc -l)))
         if [ 0 != "$print_string" ]
         then
             echo -e '\e[0;31m'$print_string" crash/es found in "$folder'\033[0m'
@@ -47,13 +52,15 @@ check_crashes() {
 }
 
 
-if [ ! -d fuzzbins/ ] 
+
+
+if [ ! -d lib_fuzzbins/ ] 
 then
     echo "Fuzzbins dont exist making them"
     make_bins
 fi
 
-if [ -d fuzzbins/ ] 
+if [ -d lib_fuzzbins/ ] 
 then
     echo "fuzzer starting"
     while true
@@ -62,14 +69,16 @@ then
     check_crashes
     echo "==================="
     do
-    for folder in fuzzbins/*/
+    for folder in lib_fuzzbins/*/
         do   
             echo "==================="
             (echo "Running $folder")
             (echo "Doing for $1")
-            timeout --foreground $1 go-fuzz -bin=$folder$(basename $folder)-fuzz.zip -workdir=output/$(basename $folder)
+            cd lib_output/crash_$(basename $folder)
+            timeout --foreground $1 ../../$folder/libbin_$(basename $folder)  -max_len=16384 ../../lib_output/$(basename $folder)
             sleep 5
             pkill -f libbin_$(basename $folder)
+            cd ../../
             echo "==================="
         done
     done
