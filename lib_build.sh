@@ -18,7 +18,7 @@ cp -r fuzzers/fuzz_* $HOME/src/fuzzdcrd/
 
 for folder in $HOME/src/fuzzdcrd/fuzz_*/
 do  
-    (cd "$folder" && go-fuzz-build)
+    (cd "$folder" && go-fuzz-build -libfuzzer && clang -fsanitize=fuzzer *.a -o libbin_$(basename $folder))
 done
 
 if [ -d $HOME/src/fuzzdcrd/ ] 
