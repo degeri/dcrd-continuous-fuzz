@@ -40,8 +40,6 @@ dcrd-continuous fuzzing
 
 # To run 
 
-
-
 ```
 chmod +x run.sh
 
@@ -64,6 +62,10 @@ chmod +x dockerless_run.sh
 
 ./dockerless_run.sh 10m
 ```
+
+## Libfuzzer
+
+To run the libfuzzer code just add `lib_` to the above commands. 
 
 ### Credits
 
