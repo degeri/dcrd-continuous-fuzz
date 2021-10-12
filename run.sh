@@ -69,7 +69,7 @@ then
             (echo "Doing for $1")
             timeout --foreground $1 go-fuzz -bin=$folder$(basename $folder)-fuzz.zip -workdir=output/$(basename $folder)
             sleep 5
-            pkill -f libbin_$(basename $folder)
+            pkill -f go-fuzz
             echo "==================="
         done
     done
