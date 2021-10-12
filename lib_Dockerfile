@@ -1,0 +1,10 @@
+FROM golang:1.16.5-buster AS builder
+
+COPY fuzzers/ /root/fuzzers/
+COPY lib_build.sh /root/lib_build.sh
+
+RUN apt-get -y update &&  \
+    apt-get install --no-install-recommends -y \
+        clang &&\
+    chmod +x /root/lib_build.sh && \
+    /root/lib_build.sh
