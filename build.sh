@@ -14,7 +14,7 @@ echo "Dcrd cloned. Copying over fuzzers and compiling"
 
 cp -r fuzzers/fuzz_* $HOME/src/fuzzdcrd/
 
-(cd $HOME/src/fuzzdcrd/ && go get github.com/dvyukov/go-fuzz/go-fuzz-dep && go get github.com/decred/dcrd/dcrec/edwards/v2@v2.0.1)
+(cd $HOME/src/fuzzdcrd/ && go mod tidy && go get github.com/dvyukov/go-fuzz/go-fuzz-dep  && go get github.com/decred/dcrd/dcrec/edwards/v2@v2.0.2)
 
 for folder in $HOME/src/fuzzdcrd/fuzz_*/
 do  

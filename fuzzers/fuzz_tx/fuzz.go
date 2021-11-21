@@ -8,12 +8,13 @@ import (
 func Fuzz(input []byte) int {
 	tx, err := dcrd_util.NewTxFromBytes(input)
 	if err == nil {
-		dcrd_util.NewTx(tx.MsgTx())
-		dcrd_util.NewTxDeep(tx.MsgTx())
-		dcrd_util.NewTxDeepTxIns(tx.MsgTx())
 		msgTx := tx.MsgTx()
+		dcrd_util.NewTx(msgTx)
+		dcrd_util.NewTxDeep(msgTx)
+		dcrd_util.NewTxDeepTxIns(tx)
 		dcrd_txsort.Sort(msgTx)
 		dcrd_txsort.InPlaceSort(msgTx)
 	}
 	return 0
 }
+
