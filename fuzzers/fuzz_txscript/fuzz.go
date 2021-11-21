@@ -55,29 +55,9 @@ func dcrd_VmStep(input []byte) {
 	}
 }
 
-func dcrd_ExtractPKScriptAddrs(input []byte) {
-	const scriptVersion = 0
-	dcrd_txscript.ExtractPkScriptAddrs(scriptVersion, input, dcrd_chaincfg.MainNetParams(), true)
-}
-
 func Fuzz(input []byte) int {
-	if dcrd_txscript.IsMultisigSigScript(input) {
-		dcrd_txscript.MultisigRedeemScriptFromScriptSig(input)
-		/* Crashes 31-08-2018 dcrd_txscript.GetMultisigMandN(input) */
-	}
-	isMultiSig := dcrd_txscript.IsMultisigScript(input)
-	if isMultiSig {
-		dcrd_txscript.CalcMultiSigStats(input)
-	}
-	dcrd_txscript.IsMultisigSigScript(input)
-	const scriptVersion = 0
-	dcrd_txscript.GetScriptClass(scriptVersion, input, true)
 	dcrd_DisasmString(input)
 	dcrd_VmStep(input)
-	/* Crashed (30-08-2018), confirmed fixed 05-09-2019 */ dcrd_ExtractPKScriptAddrs(input)
-	dcrd_txscript.ExtractPkScriptAltSigType(input)
-	dcrd_txscript.GenerateProvablyPruneableOut(input)
-	dcrd_txscript.GetStakeOutSubclass(input, true)
 	dcrd_txscript.ContainsStakeOpCodes(input, true)
 
 	{
